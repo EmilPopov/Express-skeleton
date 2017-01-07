@@ -18,4 +18,7 @@ module.exports = function(config) {
         console.log('DB ERROR: ' + err);
     });
 
+    // add Admin
+    require('../data/User').seedAdminUser();
+
 };

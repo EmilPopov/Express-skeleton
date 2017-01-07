@@ -14,5 +14,7 @@ require('./server/config/database')(config);
 require('./server/config/express')(config, app);
 //set routes
 require('./server/config/routes.js')(app);
+//set passport
+require('./server/config/passport.js')();
 
 app.listen(config.port);
