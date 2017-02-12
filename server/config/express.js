@@ -2,8 +2,9 @@ var express = require('express');
 var hbs = require('express-handlebars');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 var session = require('express-session');
+var passport = require('passport');
+var MongoStore = require('connect-mongo/es5');
 
 
 module.exports = function(config, app) {
@@ -25,11 +26,25 @@ module.exports = function(config, app) {
         extended: true
     }));
     app.use(session({
-      secret: 'something-secret!@&%',
-      resave:false,
-      saveUninitialized:false
+        secret: 'something-secret!@&%',
+        resave: true,
+        saveUninitialized: true,
+        // store: new MongoStore({
+        //   url: config.db,
+        //   collection: 'sessions'
+        // })
     }));
+
+
     app.use(passport.initialize());
     app.use(passport.session());
 
+    // set current user
+    app.use(function(req, res, next) {
+        if (req.user) {
+            res.locals.currentUser = req.user;
+        }
+        next();
+    });
+ // app.use(express.static(config.rootPath + 'public'))
 };

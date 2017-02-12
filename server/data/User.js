@@ -33,12 +33,14 @@ module.exports.seedAdminUser = function () {
     if (users.length === 0) {
       User.create({
         username:'Admin',
-        filename:'Admin',
+        firstName:'Admin',
         lastName:'Admin',
         salt:salt,
         hashedPass:hashedPass,
         roles:['Admin']
       });
+
     }
+
   });
 };
